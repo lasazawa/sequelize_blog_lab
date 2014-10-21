@@ -1,3 +1,4 @@
+<% include partials/header %>
 <h1>Edit post</h1>
 <form action="/posts/:id?_method=put" method="post">
 
@@ -5,3 +6,4 @@
     <input name="post[blog]" placeholder="Write your post here" >
     <input type="submit" value="Save">
 </form>
+<% include partials/footer %>

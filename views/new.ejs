@@ -1,3 +1,4 @@
+<% include partials/header %>
 <h1>Create a new post</h1>
 <form action="/new" method="post">
     <select name="author">
@@ -10,3 +11,4 @@
     <input name="post[blog]" placeholder="Write your post here" value="<%= blog %>">
     <input type="submit" value="Save">
 </form>
+<% include partials/footer %>

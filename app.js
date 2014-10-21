@@ -10,8 +10,7 @@ app.use(methodOverride('_method'));
 
 //Home
 app.get('/', function(req, res) {
-    db.Post.findAll().done(function(err, posts) {
-        console.log(posts);
+    db.Post.findAll({include:[db.Author]}).done(function(err, posts) {
         res.render('home', {allPosts:posts});
     });
 });
@@ -48,25 +47,40 @@ app.post('/author', function(req,res) {
 
 //Create blog
 app.post('/new', function(req, res) {
+
+    // get all information about the post
     var title = req.body.post.title;
     var blog = req.body.post.blog;
-    var authorId = req.body.author.id;
-    var author = req.body.author.name;
-    console.log("clicked save");
+
+    // get the name of the author
+    var author = req.body.author;
+    console.log("REQ.BODY GOES HERE: ", req.body);
+
+    // now that we have the name of the author, let's look him/her up
+    // so that we can grab the ID of that specific author
+    db.Author.find({where:
+        {
+            name: author
+        }}).done(function(err,author){
+    // once we've successfully found the author, we have access to their ID
+    // let's add that ID as the AuthorId for the post we are creating
     db.Post.create({
         title:title,
         blog:blog,
-        AuthorId: authorId
-    }).done(function(err, success) {
+        AuthorId: author.id,
+        // author:author.name
+    }).done(function(err, newPost) {
         if (err) {
             console.log(err);
             var errMsg = "Error here, yo";
-            res.render('new', {errMsg:errMsg, title:title, blog:blog, author:author});
+            res.render('new', {errMsg:errMsg, title:title, blog:blog, author:author, name: name});
         }
         else {
+            author.addPost(newPost);
             res.redirect('/');
         }
     });
+});
 });
 
 //Edit
