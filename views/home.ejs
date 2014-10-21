@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<body>
+    <h1>Moo Blog</h1>
+    <h3>Recent Posts</h3>
+    <a href="/new">Add a post</a>
+    <a href="/author">Add an author</a>
+
+    <% allPosts.forEach(function(post){ %>
+    <h3><%= post.title %></h3>
+    <p>by <%= post.author %></p>
+    <p><%= post.blog %></p>
+
+    <form action="/<%= post.id %>?_method=delete" method="post">
+        <input type="submit" value="Delete">
+    </form>
+    <a href="/posts/<%= post.id %>/edit">Edit</a>
+  <% }); %>
+
+</body>
+</html>
+
+
+

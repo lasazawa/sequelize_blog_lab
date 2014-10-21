@@ -1,0 +1,12 @@
+<h1>Create a new post</h1>
+<form action="/new" method="post">
+    <select name="author">
+        <% authors.forEach(function(author){ %>
+    <option value="<%= author.name %>"><%= author.name %></option>
+        <% }) %>
+    </select>
+    <a href="/author">Add Author</a>
+    <input name="post[title]" placeholder="Title" value="<%= title %>">
+    <input name="post[blog]" placeholder="Write your post here" value="<%= blog %>">
+    <input type="submit" value="Save">
+</form>
